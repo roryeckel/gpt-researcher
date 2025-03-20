@@ -1,5 +1,6 @@
 services:
   gpt-researcher:
+    container_name: gpt-researcher
     pull_policy: build
     image: gptresearcher/gpt-researcher
     build: ./
@@ -18,6 +19,7 @@ services:
       - 8000:8000
       
   gptr-nextjs:
+    container_name: gptr-nextjs
     pull_policy: build
     image: gptresearcher/gptr-nextjs
     stdin_open: true

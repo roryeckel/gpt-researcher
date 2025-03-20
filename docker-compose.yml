@@ -1,5 +1,6 @@
 services:
   gpt-researcher:
+    container_name: gpt-researcher
     image: ghcr.io/roryeckel/gpt-researcher/gpt-researcher:master # TODO
     environment: 
       OPENAI_API_KEY: ${OPENAI_API_KEY}
@@ -16,6 +17,7 @@ services:
       - 8000:8000
       
   gptr-nextjs:
+    container_name: gptr-nextjs
     image: ghcr.io/roryeckel/gpt-researcher/gptr-nextjs:master # TODO
     stdin_open: true
     environment:
