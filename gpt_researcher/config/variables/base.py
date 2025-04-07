@@ -32,3 +32,4 @@ class BaseConfig(TypedDict):
     DEEP_RESEARCH_CONCURRENCY: int
     DEEP_RESEARCH_DEPTH: int
     DEEP_RESEARCH_BREADTH: int
+    BROWSER_HEADLESS: bool

@@ -6,6 +6,8 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       TAVILY_API_KEY: ${TAVILY_API_KEY}
       LANGCHAIN_API_KEY: ${LANGCHAIN_API_KEY}
+      SCRAPER: ${SCRAPER}
+      BROWSER_HEADLESS: ${BROWSER_HEADLESS}
       LOGGING_LEVEL: INFO
     volumes:
       - ${PWD}/my-docs:/usr/src/app/my-docs:rw

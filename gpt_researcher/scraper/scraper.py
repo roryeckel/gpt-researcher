@@ -26,7 +26,28 @@ class Scraper:
     Scraper class to extract the content from the links
     """
 
-    def __init__(self, urls, user_agent, scraper, worker_pool: WorkerPool):
+    SCRAPER_TO_PKG_MAP = {
+        "tavily_extract": "tavily_extract",
+        "firecrawl": "firecrawl",
+        "browser": "selenium"
+    }
+
+    PKG_MAP = {
+        "tavily_extract": {
+            "package_installation_name": "tavily-python",
+            "import_name": "tavily",
+        },
+        "firecrawl": {
+            "package_installation_name": "firecrawl-py",
+            "import_name": "firecrawl",
+        },
+        "selenium": {
+            "package_installation_name": "selenium",
+            "import_name": "selenium",
+        },
+    }
+
+    def __init__(self, urls, user_agent: str, scraper: str, headless: bool, worker_pool: WorkerPool):
         """
         Initialize the Scraper class.
         Args:
@@ -36,10 +57,10 @@ class Scraper:
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": user_agent})
         self.scraper = scraper
-        if self.scraper == "tavily_extract":
-            self._check_pkg(self.scraper)
-        if self.scraper == "firecrawl":
-            self._check_pkg(self.scraper)
+        self.headless = headless
+        if self.scraper in self.SCRAPER_TO_PKG_MAP:
+            pkg = self.SCRAPER_TO_PKG_MAP[self.scraper]
+            self._check_pkg(pkg)
         self.logger = logging.getLogger(__name__)
         self.worker_pool = worker_pool
 
@@ -60,17 +81,7 @@ class Scraper:
         dependencies beyond requirements.txt. When adding a new scraper to the repo, update `pkg_map`
         with its required information and call check_pkg() during initialization.
         """
-        pkg_map = {
-            "tavily_extract": {
-                "package_installation_name": "tavily-python",
-                "import_name": "tavily",
-            },
-            "firecrawl": {
-                "package_installation_name": "firecrawl-py",
-                "import_name": "firecrawl",
-            },
-        }
-        pkg = pkg_map[scrapper_name]
+        pkg = self.PKG_MAP[scrapper_name]
         if not importlib.util.find_spec(pkg["import_name"]):
             pkg_inst_name = pkg["package_installation_name"]
             init(autoreset=True)
@@ -93,8 +104,11 @@ class Scraper:
         """
         async with self.worker_pool.throttle():
             try:
-                Scraper = self.get_scraper(link)
-                scraper = Scraper(link, session)
+                ScraperClass = self.get_scraper(link)
+                if ScraperClass is BrowserScraper:
+                    scraper = ScraperClass(link, self.headless, session)
+                else:
+                    scraper = ScraperClass(link, session)
 
                 # Get scraper name
                 scraper_name = scraper.__class__.__name__

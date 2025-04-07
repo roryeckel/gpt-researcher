@@ -21,7 +21,7 @@ DEFAULT_CONFIG: BaseConfig = {
     "REPORT_FORMAT": "APA",
     "MAX_ITERATIONS": 3,
     "AGENT_ROLE": None,
-    "SCRAPER": "bs",
+    "SCRAPER": "bs", # Note: this is also specified in .env.example
     "MAX_SCRAPER_WORKERS": 15,
     "MAX_SUBTOPICS": 3,
     "LANGUAGE": "english",
@@ -31,4 +31,5 @@ DEFAULT_CONFIG: BaseConfig = {
     "DEEP_RESEARCH_BREADTH": 3,
     "DEEP_RESEARCH_DEPTH": 2,
     "DEEP_RESEARCH_CONCURRENCY": 4,
+    "BROWSER_HEADLESS": False,
 }

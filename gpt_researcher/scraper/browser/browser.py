@@ -22,11 +22,11 @@ from ..utils import get_relevant_images, extract_title, get_text_from_soup, clea
 FILE_DIR = Path(__file__).parent.parent
 
 class BrowserScraper:
-    def __init__(self, url: str, session=None):
+    def __init__(self, url: str, headless: bool, session=None):
         self.url = url
         self.session = session
         self.selenium_web_browser = "chrome"
-        self.headless = False
+        self.headless = headless
         self.user_agent = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                            "AppleWebKit/537.36 (KHTML, like Gecko) "
                            "Chrome/128.0.0.0 Safari/537.36")
@@ -101,6 +101,8 @@ class BrowserScraper:
             elif self.selenium_web_browser == "safari":
                 self.driver = webdriver.Safari(options=options)
             else:  # chrome
+                if self.headless:
+                    options.add_argument("--disable-gpu")
                 if platform == "linux" or platform == "linux2":
                     options.add_argument("--disable-dev-shm-usage")
                     options.add_argument("--remote-debugging-port=9222")

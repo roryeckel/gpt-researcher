@@ -31,7 +31,7 @@ async def scrape_urls(
     )
 
     try:
-        scraper = Scraper(urls, user_agent, cfg.scraper, worker_pool=worker_pool)
+        scraper = Scraper(urls, user_agent, cfg.scraper, headless=cfg.browser_headless, worker_pool=worker_pool)
         scraped_data = await scraper.run()
         for item in scraped_data:
             if 'image_urls' in item:
