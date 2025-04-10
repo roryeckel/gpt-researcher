@@ -7,8 +7,7 @@ export const useWebSocket = (
   setAnswer: React.Dispatch<React.SetStateAction<string>>, 
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setShowHumanFeedback: React.Dispatch<React.SetStateAction<boolean>>,
-  setQuestionForHuman: React.Dispatch<React.SetStateAction<boolean | true>>,
-  currentApiUrl: string
+  setQuestionForHuman: React.Dispatch<React.SetStateAction<boolean | true>>
 ) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const heartbeatInterval = useRef<number>();
@@ -105,7 +104,7 @@ export const useWebSocket = (
         }
       };
     }
-  }, [socket, currentApiUrl]); // Add currentApiUrl to dependencies
+  }, [socket]);
 
   return { socket, setSocket, initializeWebSocket };
 };

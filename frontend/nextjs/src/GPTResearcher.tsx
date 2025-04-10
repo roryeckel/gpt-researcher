@@ -54,14 +54,6 @@ export const GPTResearcher = ({
   const [showScrollButton, setShowScrollButton] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
-  // Store apiUrl in state to ensure consistency
-  const [currentApiUrl, setCurrentApiUrl] = useState(apiUrl);
-
-  // Update currentApiUrl when prop changes
-  useEffect(() => {
-    setCurrentApiUrl(apiUrl);
-  }, [apiUrl]);
-
   // Update callback when results change
   useEffect(() => {
     if (onResultsChange && orderedData.length > 0) {
@@ -74,8 +66,7 @@ export const GPTResearcher = ({
     setAnswer,
     setLoading,
     setShowHumanFeedback,
-    setQuestionForHuman,
-    currentApiUrl
+    setQuestionForHuman
   );
 
   const handleFeedbackSubmit = (feedback: string | null) => {
