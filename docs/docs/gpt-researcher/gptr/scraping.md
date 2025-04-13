@@ -61,6 +61,12 @@ When `SCRAPER="browser"`, GPT Researcher uses Selenium for dynamic scraping. Thi
 - Waits for dynamic content to load
 - Extracts text and data from the fully rendered page
 
+> **Note:** You can control browser visibility with the `BROWSER_HEADLESS` environment variable. By default, this is set to `True`, meaning the browser will run in headless mode (no visible GUI) during scraping. To see the browser window during scraping, set:
+> ```bash
+> export BROWSER_HEADLESS=False
+> ```
+> Headless mode is especially useful for server and containerized environments without a display, while visible mode can be helpful for debugging and development.
+
 Benefits:
 - Can scrape dynamically loaded content
 - Simulates real user interactions (scrolling, clicking, etc.)
